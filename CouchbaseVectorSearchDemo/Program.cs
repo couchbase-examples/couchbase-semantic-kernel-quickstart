@@ -247,7 +247,6 @@ public abstract class Program
         // Configure Hyperscale index options
         var collectionOptions = new CouchbaseQueryCollectionOptions
         {
-            IndexName = "hyperscale_glossary_index",
             SimilarityMetric = "cosine"
         };
 
