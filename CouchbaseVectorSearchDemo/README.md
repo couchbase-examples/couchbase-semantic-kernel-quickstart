@@ -121,7 +121,7 @@ var collection = vectorStore.GetCollection<string, Glossary>(
 );
 ```
 
-The `CouchbaseQueryCollectionOptions` works with both Hyperscale and Composite indexes - simply specify the appropriate index name. For Search Vector indexes, use `CouchbaseSearchCollection` with `CouchbaseSearchCollectionOptions` instead.
+The `CouchbaseQueryCollectionOptions` works with both Hyperscale and Composite indexes. For Search Vector indexes, use `CouchbaseSearchCollection` with `CouchbaseSearchCollectionOptions` instead.
 
 **Automatic Embedding Generation** - The connector integrates with Semantic Kernel's `IEmbeddingGenerator` interface to automatically generate embeddings from text. When you provide an embedding generator (in this case, OpenAI's `text-embedding-3-small`), the text is automatically converted to vectors:
 
@@ -250,7 +250,7 @@ Couchbase offers three types of vector indexes optimized for different use cases
 - Designed to scale to billions of vectors with low memory footprint
 - Optimized for high-performance concurrent operations
 - Ideal for: Large-scale semantic search, recommendations, content discovery
-- **Creation**: Using SQL++ `CREATE VECTOR INDEX` as shown in Step 3
+- **Creation**: Using SQL++ `CREATE VECTOR INDEX` as shown in the Hyperscale Index Creation section
 
 **2. Composite Vector Indexes**
 - Uses SQL++ queries via `CouchbaseQueryCollection`
