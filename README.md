@@ -19,4 +19,4 @@ See the [detailed tutorial](./CouchbaseVectorSearchDemo/README.md) for complete 
 ##  Links
 
 - **Connector Library**: [couchbase-semantic-kernel](https://github.com/Couchbase-Ecosystem/couchbase-semantic-kernel)
-- **NuGet Package**: [CouchbaseConnector.SemanticKernel](https://www.nuget.org/packages/CouchbaseConnector.SemanticKernel)
+- **NuGet Package**: [CouchbaseConnector.VectorData](https://www.nuget.org/packages/CouchbaseConnector.VectorData)

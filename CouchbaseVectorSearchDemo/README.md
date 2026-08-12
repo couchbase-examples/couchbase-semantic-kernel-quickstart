@@ -91,7 +91,7 @@ internal sealed class Glossary
     [VectorStoreData]                   
     public string Definition { get; set; }
     
-    [VectorStoreVector(Dimensions: 1536)]
+    [VectorStoreVector(1536)]
     public ReadOnlyMemory<float> DefinitionEmbedding { get; set; }
 }
 ```
@@ -157,18 +157,26 @@ While the application works without creating indexes manually, you can optionall
 
 This demo uses a **Hyperscale Vector Index** - optimized for pure vector searches without heavy scalar filtering.
 
-After documents are inserted, the demo creates the Hyperscale index:
+After documents are inserted, the demo asks the connector to create the index:
+
+```csharp
+await collection.EnsureVectorIndexExistsAsync();
+```
+
+The connector builds and runs the statement, deriving the vector field, dimensions and `INCLUDE` fields from the `Glossary` model and the similarity metric from `CouchbaseQueryCollectionOptions`:
 
 ```sql
 CREATE VECTOR INDEX `hyperscale_glossary_index` 
-ON `demo`.`semantic-kernel`.`glossary` (DefinitionEmbedding VECTOR) 
-INCLUDE (Category, Term, Definition)
+ON `demo`.`semantic-kernel`.`glossary` (`DefinitionEmbedding` VECTOR) 
+INCLUDE (`Category`, `Term`, `Definition`)
 USING GSI WITH {
     "dimension": 1536,
     "similarity": "cosine", 
     "description": "IVF,SQ8"
 }
 ```
+
+This runs **after** ingestion: Hyperscale indexes are IVF-based, and their centroids are trained from the vectors already present, so the collection has to contain data first.
 
 **Hyperscale Index Configuration:**
 - **Index Type**: Hyperscale Vector Index - best for pure vector similarity searches
@@ -368,7 +376,7 @@ The Couchbase Semantic Kernel connector provides a seamless integration between 
 -  **Connector Library**: [couchbase-semantic-kernel](https://github.com/Couchbase-Ecosystem/couchbase-semantic-kernel)
 -  **Couchbase Vector Search**: [Documentation](https://docs.couchbase.com/server/current/vector-search/vector-search.html)
 -  **Semantic Kernel**: [Microsoft Semantic Kernel](https://learn.microsoft.com/en-us/semantic-kernel/)
--  **NuGet Package**: [CouchbaseConnector.SemanticKernel](https://www.nuget.org/packages/CouchbaseConnector.SemanticKernel)
+-  **NuGet Package**: [CouchbaseConnector.VectorData](https://www.nuget.org/packages/CouchbaseConnector.VectorData)
 
 ## License
 
